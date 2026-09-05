@@ -2,12 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dmemurer.dk/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/</loc>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/badevaerelse/</loc>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/fliser-klinker/</loc>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/facader-fuger/</loc>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/renovering/</loc>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://dmemurer.dk/ydelser/murvaerk-reparation/</loc>
+    <lastmod>2026-09-05</lastmod>
   </url>
   <url>
     <loc>https://dmemurer.dk/privatliv.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <lastmod>2026-09-05</lastmod>
   </url>
 </urlset>
