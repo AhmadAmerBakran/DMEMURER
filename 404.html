@@ -1,28 +1,34 @@
 <!doctype html>
-<html lang="da">
+<html lang="da-DK">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070707">
+  <meta name="robots" content="noindex,follow">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/styles.css">
   <title>Siden blev ikke fundet | DME Murerforretning</title>
 </head>
-<body class="privacy-page">
-  <header class="site-header privacy-header is-scrolled">
+<body>
+  <header class="site-header is-scrolled">
     <div class="container header-inner">
       <a class="brand" href="/" aria-label="DME Murerforretning – forsiden">
-        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 8h40v32H4z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M4 19h40M4 30h40M15 8v11M34 8v11M24 19v11M14 30v10M34 30v10" fill="none" stroke="currentColor" stroke-width="3"/></svg>
-        <span class="brand-text"><strong>DME</strong><small>Murerforretning</small></span>
+        <img src="/assets/images/dme-logo.webp" width="960" height="608" alt="DME Murerforretning" fetchpriority="high">
       </a>
     </div>
   </header>
-  <main class="privacy-main">
-    <div class="container privacy-content">
-      <p class="eyebrow">404</p>
-      <h1>Siden blev ikke fundet</h1>
-      <p class="lead">Adressen findes ikke, eller siden er blevet flyttet.</p>
-      <a class="button button-primary" href="/">Gå til forsiden</a>
+
+  <main id="main" class="simple-page">
+    <div class="container simple-content">
+      <span class="error-code">FEJL 404</span>
+      <p class="eyebrow">Siden findes ikke</p>
+      <h1>Her er der ikke mere at mure på.</h1>
+      <p class="lead">Adressen er muligvis skrevet forkert, eller siden er blevet flyttet. Du kan gå tilbage til forsiden eller se vores murerfaglige ydelser.</p>
+      <div class="hero-actions">
+        <a class="button button-gold" href="/">Gå til forsiden</a>
+        <a class="button button-outline" href="/ydelser/">Se ydelser</a>
+      </div>
     </div>
   </main>
 </body>
