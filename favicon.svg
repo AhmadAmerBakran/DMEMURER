@@ -1,7 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#171714"/>
-  <g fill="none" stroke="#c45a38" stroke-width="4" stroke-linecap="square">
-    <path d="M10 13h44v38H10z"/>
-    <path d="M10 26h44M10 39h44M23 13v13M42 13v13M32 26v13M22 39v12M42 39v12"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DME">
+  <defs>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f1cf7a"/>
+      <stop offset=".48" stop-color="#b97d24"/>
+      <stop offset="1" stop-color="#e7b85e"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0" x2="1">
+      <stop offset="0" stop-color="#f1f2f3"/>
+      <stop offset=".5" stop-color="#8e9499"/>
+      <stop offset="1" stop-color="#dfe1e3"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#050505"/>
+  <path d="M7 25 32 8l25 17" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9 32v20h7.5C23 52 27 48 27 42s-4-10-10.5-10H9Zm5 5h2.5c3.6 0 5.5 1.8 5.5 5s-1.9 5-5.5 5H14V37Z" fill="url(#silver)"/>
+  <path d="M28 52V32h5l5 8 5-8h5v20h-5V40l-5 7-5-7v12h-5Z" fill="url(#gold)"/>
+  <path d="M50 32h8v4h-4v4h4v4h-4v4h4v4h-8V32Z" fill="url(#silver)"/>
 </svg>
