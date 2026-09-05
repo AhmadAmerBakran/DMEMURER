@@ -1,0 +1,19 @@
+{
+  "name": "DME Murerforretning",
+  "short_name": "DME Murer",
+  "description": "DME Murerforretning – Kvalitet, Håndværk, Tillid",
+  "lang": "da-DK",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#070707",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
