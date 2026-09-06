@@ -37,6 +37,9 @@ jobs:
       - name: Check JavaScript syntax
         run: node --check script.js
 
+      - name: Check banner video encoding
+        run: bash scripts/check_video.sh
+
       - name: Start local production-like server
         run: |
           python -m http.server 4173 > /tmp/dme-http.log 2>&1 &
