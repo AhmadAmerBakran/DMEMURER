@@ -20,6 +20,9 @@
 /styles.css
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
+/undersider.css
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
 /script.js
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
