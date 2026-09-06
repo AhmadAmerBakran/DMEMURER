@@ -29,8 +29,9 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" as="image" href="/assets/images/dme-logo.svg" type="image/svg+xml" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/script.js" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=20260906">
+  <link rel="stylesheet" href="/forbedringer.css?v=20260906">
+  <script src="/script.js?v=20260906" defer></script>
 
   <script type="application/ld+json">
   {
@@ -57,13 +58,13 @@
         "@type":"ItemList",
         "name":"Murerfaglige ydelser",
         "itemListElement":[
-          {"@type":"ListItem","position":1,"item":{"@type":"Service","name":"Nybyggeri","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":2,"item":{"@type":"Service","name":"Fliser og klinker","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":3,"item":{"@type":"Service","name":"Badeværelser","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":4,"item":{"@type":"Service","name":"Facader og fuger","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":5,"item":{"@type":"Service","name":"Renovering","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":6,"item":{"@type":"Service","name":"Tilbygning","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
-          {"@type":"ListItem","position":7,"item":{"@type":"Service","name":"Reparationer","provider":{"@id":"https://dmemurer.dk/#organisation"}}}
+          {"@type":"ListItem","position":1,"item":{"@type":"Service","name":"Nybyggeri","url":"https://dmemurer.dk/ydelser/nybyggeri/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":2,"item":{"@type":"Service","name":"Fliser og klinker","url":"https://dmemurer.dk/ydelser/fliser-klinker/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":3,"item":{"@type":"Service","name":"Badeværelser","url":"https://dmemurer.dk/ydelser/badevaerelse/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":4,"item":{"@type":"Service","name":"Facader og fuger","url":"https://dmemurer.dk/ydelser/facader-fuger/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":5,"item":{"@type":"Service","name":"Renovering","url":"https://dmemurer.dk/ydelser/renovering/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":6,"item":{"@type":"Service","name":"Tilbygning","url":"https://dmemurer.dk/ydelser/tilbygning/","provider":{"@id":"https://dmemurer.dk/#organisation"}}},
+          {"@type":"ListItem","position":7,"item":{"@type":"Service","name":"Reparationer","url":"https://dmemurer.dk/ydelser/murvaerk-reparation/","provider":{"@id":"https://dmemurer.dk/#organisation"}}}
         ]
       }
     ]
@@ -97,17 +98,11 @@
   <main id="indhold">
     <section class="banner" aria-labelledby="banner-overskrift">
       <div class="banner__medie" data-banner-medie>
-        <!-- Bannerfilm: tilføj kilderne, når filerne ligger i /assets/video/. -->
-        <video class="banner__video" autoplay muted loop playsinline preload="metadata" data-banner-video aria-label="DME Murerforretning i arbejde">
-          <!-- <source src="/assets/video/banner-dme.webm" type="video/webm"> -->
-          <source src="/assets/video/banner-dme.mp4" type="video/mp4">
+        <video class="banner__video" muted loop playsinline preload="none" data-banner-video aria-label="DME Murerforretning i arbejde">
+          <source data-src="/assets/video/banner-dme.mp4" type="video/mp4">
         </video>
         <div class="banner__baggrund" aria-hidden="true"></div>
         <div class="banner__toning" aria-hidden="true"></div>
-        <div class="banner__filmplads" data-filmplads>
-          <span class="banner__filmikon" aria-hidden="true"></span>
-          <div><strong>Plads til bannerfilm</strong><small>1920 × 1080 · 8–15 sekunder · uden lyd</small></div>
-        </div>
       </div>
 
       <div class="ramme banner__indre">
@@ -150,44 +145,65 @@
             <p class="overlinje overlinje--moerk">Vores ydelser</p>
             <h2 id="ydelser-overskrift">Syv fagområder.<br><span>Én høj standard.</span></h2>
           </div>
-          <p>Vælg et område for at se, hvad vi lægger vægt på, og gå direkte videre til en konkret tilbudsforespørgsel.</p>
+          <p>Vælg et område for at se, hvad vi lægger vægt på, eller gå videre til den fulde ydelsesside.</p>
         </header>
 
         <div class="ydelsesgitter">
-          <button class="ydelseskort vises" type="button" data-ydelse="nybyggeri" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-nybyggeri.webp" width="1800" height="1200" alt="Nybyggeri og nyt murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Nyt murværk</small><strong>Nybyggeri</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="nybyggeri" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-nybyggeri.webp" width="1800" height="1200" alt="Nybyggeri og nyt murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Nyt murværk</small><strong>Nybyggeri</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/nybyggeri/">Læs mere om nybyggeri <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="fliser-klinker" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-fliser-klinker.webp" width="1800" height="1200" alt="Fliser og klinker lagt med præcise linjer" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Flader og afslutninger</small><strong>Fliser og klinker</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="fliser-klinker" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-fliser-klinker.webp" width="1800" height="1200" alt="Fliser og klinker lagt med præcise linjer" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Flader og afslutninger</small><strong>Fliser og klinker</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/fliser-klinker/">Læs mere om fliser og klinker <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="badevaerelser" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-badevaerelser.webp" width="1800" height="1200" alt="Murerarbejde i badeværelse" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Vådrum med præcision</small><strong>Badeværelser</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="badevaerelser" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-badevaerelser.webp" width="1800" height="1200" alt="Murerarbejde i badeværelse" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Vådrum med præcision</small><strong>Badeværelser</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/badevaerelse/">Læs mere om badeværelser <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="facader-fuger" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-facader-fuger.webp" width="1800" height="1200" alt="Facade og fuger i murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Murværkets yderside</small><strong>Facader og fuger</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="facader-fuger" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-facader-fuger.webp" width="1800" height="1200" alt="Facade og fuger i murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Murværkets yderside</small><strong>Facader og fuger</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/facader-fuger/">Læs mere om facader og fuger <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="renovering" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-renovering.webp" width="1800" height="1200" alt="Renovering af eksisterende murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Nyt møder eksisterende</small><strong>Renovering</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="renovering" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-renovering.webp" width="1800" height="1200" alt="Renovering af eksisterende murværk" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Nyt møder eksisterende</small><strong>Renovering</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/renovering/">Læs mere om renovering <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="tilbygning" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-tilbygning.webp" width="1800" height="1200" alt="Murværk til tilbygning" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Plads med sammenhæng</small><strong>Tilbygning</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="tilbygning" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-tilbygning.webp" width="1800" height="1200" alt="Murværk til tilbygning" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Plads med sammenhæng</small><strong>Tilbygning</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/tilbygning/">Læs mere om tilbygning <span aria-hidden="true">→</span></a>
+          </article>
 
-          <button class="ydelseskort vises" type="button" data-ydelse="reparationer" aria-haspopup="dialog">
-            <span class="ydelseskort__medie"><img src="/assets/images/services/service-reparationer.webp" width="1800" height="1200" alt="Reparation af murværk og fuger" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
-            <span class="ydelseskort__tekst"><small>Skader løst ved årsagen</small><strong>Reparationer</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
-          </button>
+          <article class="ydelseskort vises">
+            <button class="ydelseskort__aabn" type="button" data-ydelse="reparationer" aria-haspopup="dialog">
+              <span class="ydelseskort__medie"><img src="/assets/images/services/service-reparationer.webp" width="1800" height="1200" alt="Reparation af murværk og fuger" loading="lazy" decoding="async"><i aria-hidden="true"></i></span>
+              <span class="ydelseskort__tekst"><small>Skader løst ved årsagen</small><strong>Reparationer</strong><em>Se mulighederne <b aria-hidden="true">↗</b></em></span>
+            </button>
+            <a class="ydelseskort__laes" href="./ydelser/murvaerk-reparation/">Læs mere om reparationer <span aria-hidden="true">→</span></a>
+          </article>
         </div>
       </div>
     </section>
@@ -311,9 +327,10 @@
               <input name="samtykke" type="checkbox" required>
               <span>Jeg accepterer, at oplysningerne bruges til at besvare min henvendelse. <a href="./privatliv.html">Læs om privatliv og personoplysninger</a>.</span>
             </label>
-            <button class="knap knap--guld kontaktformular__send" type="submit"><span>Opret e-mail med forespørgsel</span><i aria-hidden="true">↗</i></button>
+            <button class="knap knap--guld kontaktformular__send" type="submit"><span>Send forespørgsel</span><i aria-hidden="true">↗</i></button>
           </div>
           <p class="kontaktformular__status" data-formularstatus aria-live="polite"></p>
+          <p class="kontaktformular__fallback">Hvis din e-mailapp ikke åbner, kan du skrive direkte til <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
           <p class="kontaktformular__tip">Du kan vedhæfte billeder, når e-mailen åbner. Det gør den første vurdering lettere.</p>
         </form>
       </div>
@@ -344,9 +361,16 @@
       <h2 id="dialog-titel" data-dialog-titel></h2>
       <p class="ydelsesdialog__indledning" data-dialog-indledning></p>
       <ul data-dialog-punkter></ul>
-      <button class="knap knap--guld" type="button" data-dialog-tilbud><span>Få tilbud på denne opgave</span><i aria-hidden="true">↗</i></button>
+      <div class="ydelsesdialog__handlinger">
+        <button class="knap knap--guld" type="button" data-dialog-tilbud><span>Få tilbud på denne opgave</span><i aria-hidden="true">↗</i></button>
+        <a class="ydelsesdialog__laes" href="./ydelser/" data-dialog-laes><span>Læs mere om ydelsen</span></a>
+      </div>
     </div>
   </dialog>
+
+  <noscript>
+    <div class="ramme" style="padding:18px 0">JavaScript er slået fra. Du kan stadig læse alle ydelsessider og kontakte os direkte på <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</div>
+  </noscript>
 
   <footer class="sidefod">
     <div class="ramme sidefod__top">
