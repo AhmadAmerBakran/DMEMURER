@@ -4,6 +4,13 @@
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   doc.documentElement.classList.add('js');
 
+  if (doc.querySelector('.subpage-hero,.simple-page,.service-page,.section-services')) {
+    const legacy = doc.createElement('link');
+    legacy.rel = 'stylesheet';
+    legacy.href = '/legacy.css';
+    doc.head.appendChild(legacy);
+  }
+
   const header = doc.querySelector('[data-header]');
   if (header) {
     let scheduled = false;
