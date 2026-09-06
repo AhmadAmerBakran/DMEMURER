@@ -1,0 +1,69 @@
+name: Normalize banner video
+
+on:
+  push:
+    branches: [production-hardening-prelaunch]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: normalize-banner-video
+  cancel-in-progress: false
+
+jobs:
+  normalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: production-hardening-prelaunch
+          fetch-depth: 0
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Remove audio and enable fast start without re-encoding video
+        shell: bash
+        run: |
+          set -euo pipefail
+          file="assets/video/banner-dme.mp4"
+          audio_count="$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$file" | grep -c . || true)"
+          moov="$(python - <<'PY'
+from pathlib import Path
+p=Path('assets/video/banner-dme.mp4').read_bytes()
+print(p.find(b'moov'))
+PY
+)"
+          mdat="$(python - <<'PY'
+from pathlib import Path
+p=Path('assets/video/banner-dme.mp4').read_bytes()
+print(p.find(b'mdat'))
+PY
+)"
+          if [[ "$audio_count" != "0" || "$moov" -gt "$mdat" ]]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -c:v copy -an -movflags +faststart "${file%.mp4}.normalized.mp4"
+            mv "${file%.mp4}.normalized.mp4" "$file"
+          fi
+
+      - name: Verify normalized video
+        run: bash scripts/check_video.sh
+
+      - name: Commit normalized video when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- assets/video/banner-dme.mp4; then
+            echo "Banner video already normalized."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/video/banner-dme.mp4
+          git commit -m "Normalize banner video for web delivery"
+          git push origin HEAD:production-hardening-prelaunch
