@@ -1,0 +1,67 @@
+name: Website quality gate
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Audit site structure, links and media budgets
+        run: python scripts/site_audit.py
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
+
+      - name: Start local production-like server
+        run: |
+          python -m http.server 4173 > /tmp/dme-http.log 2>&1 &
+          echo $! > /tmp/dme-http.pid
+          for i in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 0.5
+          done
+          cat /tmp/dme-http.log
+          exit 1
+
+      - name: Run Lighthouse
+        run: |
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --output=json \
+            --output-path=./lighthouse-home.json
+          python scripts/check_lighthouse.py lighthouse-home.json
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-home
+          path: lighthouse-home.json
+          if-no-files-found: ignore
+          retention-days: 14
