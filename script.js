@@ -215,6 +215,12 @@
     byggeviser.dataset.niveau = String(Math.min(antal, 5));
   }
 
+  const forespurgtYdelse = new URLSearchParams(location.search).get('service');
+  if (forespurgtYdelse && ydelsesvalg) {
+    const mulighed = [...ydelsesvalg.options].find(option => option.textContent.trim() === forespurgtYdelse.trim());
+    if (mulighed) ydelsesvalg.value = mulighed.value || mulighed.textContent;
+  }
+
   formular?.addEventListener('input', event => {
     event.target.closest('.felt')?.classList.remove('har-fejl');
     if (formularstatus) formularstatus.textContent = '';
