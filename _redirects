@@ -1,0 +1,11 @@
+# Canonical path redirects. Hostname and HTTP->HTTPS redirects are configured at Cloudflare zone level.
+/index.html / 301
+/ydelser/index.html /ydelser/ 301
+/privatliv /privatliv.html 301
+/ydelser/nybyggeri /ydelser/nybyggeri/ 301
+/ydelser/fliser-klinker /ydelser/fliser-klinker/ 301
+/ydelser/badevaerelse /ydelser/badevaerelse/ 301
+/ydelser/facader-fuger /ydelser/facader-fuger/ 301
+/ydelser/renovering /ydelser/renovering/ 301
+/ydelser/tilbygning /ydelser/tilbygning/ 301
+/ydelser/murvaerk-reparation /ydelser/murvaerk-reparation/ 301
