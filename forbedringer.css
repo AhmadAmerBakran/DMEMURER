@@ -1,5 +1,11 @@
 /* Stabilt komponentlag: formular, interaktioner, byggescener og privatliv. */
 
+/* Heroens største tekst er LCP-indhold og må ikke vente på en reveal-animation. */
+.banner__overskrift.vises{opacity:1;transform:none;transition:none}
+
+/* WCAG AA-kontrast for de små footer-links og copyrightteksten. */
+.sidefod__bund{color:#858789}
+
 /* Byggeviseren skal læses som en animation, ikke som en tom billedramme. */
 .byggeviser{background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(255,255,255,.42));box-shadow:inset 0 1px rgba(255,255,255,.7),0 18px 46px rgba(28,31,33,.06)}
 .byggeviser:before{content:"";position:absolute;left:28px;right:28px;bottom:65px;height:3px;border-radius:99px;background:linear-gradient(90deg,#6f5432,#b4894e,#6f5432);opacity:.45}
