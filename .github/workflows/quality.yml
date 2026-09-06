@@ -21,6 +21,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Capture source snapshot
+        run: tar --exclude=.git -czf /tmp/dme-source.tgz .
+
+      - name: Upload source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: dme-source-snapshot
+          path: /tmp/dme-source.tgz
+          retention-days: 2
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -49,15 +59,15 @@ jobs:
             -map 0:v:0 -c:v copy -an -movflags +faststart \
             banner-dme-normalized.mp4
 
-      - name: Check normalized banner candidate
-        run: bash scripts/check_video.sh banner-dme-normalized.mp4
-
       - name: Upload normalized banner candidate
         uses: actions/upload-artifact@v4
         with:
           name: normalized-banner-video
           path: banner-dme-normalized.mp4
           retention-days: 2
+
+      - name: Check normalized banner candidate
+        run: bash scripts/check_video.sh banner-dme-normalized.mp4
 
       - name: Start local production-like server
         run: |
