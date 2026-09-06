@@ -5,30 +5,66 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0c0d">
   <meta name="robots" content="noindex,follow">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Siden blev ikke fundet. Gå tilbage til DME Murerforretnings forside eller se vores murerfaglige ydelser.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="./styles.css?v=20260906">
+  <link rel="stylesheet" href="./forbedringer.css?v=20260906">
+  <script src="./script.js?v=20260906" defer></script>
   <title>Siden blev ikke fundet | DME Murerforretning</title>
 </head>
-<body>
-  <header class="simpelt-hoved">
+<body id="top">
+  <a class="spring-link" href="#indhold">Gå direkte til indholdet</a>
+
+  <header class="sidehoved er-rullet" data-sidehoved>
     <div class="ramme sidehoved__indre">
-      <a class="maerke" href="/" aria-label="DME Murerforretning – forsiden">
-        <img src="/assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning">
+      <a class="maerke" href="./index.html" aria-label="DME Murerforretning – forsiden">
+        <img src="./assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning">
       </a>
+      <nav class="navigation" id="navigation" aria-label="Hovednavigation" data-navigation>
+        <a href="./index.html#ydelser">Ydelser</a>
+        <a href="./index.html#om-os">Om DME</a>
+        <a href="./index.html#arbejdsform">Sådan arbejder vi</a>
+        <a href="./index.html#spoergsmaal">Spørgsmål</a>
+        <a class="navigation__tilbud" href="./index.html#kontakt">Få et tilbud</a>
+      </nav>
+      <button class="menuknap" type="button" aria-expanded="false" aria-controls="navigation" aria-label="Åbn menu" data-menuknap>
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <main class="simple-page">
-    <div class="simple-content">
-      <span class="fejlkode">Fejl 404</span>
-      <h1>Her er der ikke mere at mure på.</h1>
-      <p>Adressen er muligvis skrevet forkert, eller siden er blevet flyttet. Gå tilbage til forsiden, eller spring direkte til vores murerfaglige ydelser.</p>
-      <div class="banner__handlinger">
-        <a class="knap knap--guld" href="/"><span>Gå til forsiden</span><i aria-hidden="true">↗</i></a>
-        <a class="knap" href="/#ydelser"><span>Se ydelser</span><i aria-hidden="true">→</i></a>
+  <main id="indhold">
+    <section class="banner" aria-labelledby="fejl-overskrift">
+      <div class="banner__medie" aria-hidden="true">
+        <div class="banner__baggrund"></div>
+        <div class="banner__toning"></div>
       </div>
-    </div>
+      <div class="ramme banner__indre">
+        <div class="banner__tekst">
+          <p class="overlinje">Fejl 404</p>
+          <h1 id="fejl-overskrift" class="banner__overskrift">Her er der ikke mere <span>at mure på.</span></h1>
+          <p class="banner__indledning">Adressen er muligvis skrevet forkert, eller siden er blevet flyttet. Du kan gå tilbage til forsiden eller fortsætte direkte til vores murerfaglige ydelser.</p>
+          <div class="banner__handlinger">
+            <a class="knap knap--guld" href="./index.html"><span>Gå til forsiden</span><i aria-hidden="true">↗</i></a>
+            <a class="knap knap--glas" href="./index.html#ydelser"><span>Se ydelser</span><i aria-hidden="true">→</i></a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="sidefod">
+    <div class="ramme sidefod__top">
+      <a class="sidefod__maerke" href="./index.html" aria-label="DME Murerforretning – forsiden"><img src="./assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning"></a>
+      <p>Præcist murerarbejde.<br>Klare aftaler.</p>
+      <a class="sidefod__mail" href="mailto:info@dmemurer.dk">info@dmemurer.dk <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="ramme sidefod__bund">
+      <span>© <span data-aar></span> DME Murerforretning</span>
+      <nav aria-label="Genveje i sidefoden"><a href="./index.html#ydelser">Ydelser</a><a href="./index.html#kontakt">Kontakt</a><a href="./privatliv.html">Privatliv</a></nav>
+      <a href="#top">Til toppen ↑</a>
+    </div>
+  </footer>
 </body>
 </html>
