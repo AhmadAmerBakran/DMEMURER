@@ -1,26 +1,34 @@
 # DME Murerforretning
 
-Hjemmesiden til DME Murerforretning er bygget som en let, statisk løsning med fokus på hastighed, tilgængelighed, søgemaskineoptimering, sikkerhed og et sammenhængende visuelt udtryk.
+Hjemmesiden til DME Murerforretning er en let statisk løsning bygget i ren HTML, CSS og JavaScript. Projektet er optimeret til Cloudflare Pages med fokus på hastighed, tilgængelighed, søgemaskineoptimering, sikkerhed, privatliv og enkel vedligeholdelse.
 
-Siden bruger ren HTML, CSS og JavaScript uden eksterne skrifttyper, analysetjenester eller tunge programbiblioteker. Det holder indlæsningen enkel og mindsker både vedligeholdelse og unødvendige tredjepartsforbindelser.
+Der bruges ingen eksterne skrifttyper, analysetjenester eller tunge JavaScript-biblioteker. Det reducerer både indlæsningstid, tredjepartsrisiko og unødvendig datadeling.
 
 ## Projektets opbygning
 
 ```text
 DMEMURER/
-├── index.html
-├── styles.css
-├── undersider.css
-├── script.js
+├── .github/workflows/quality.yml
+├── .gitignore
 ├── 404.html
+├── MEDIA-GUIDE.md
+├── README.md
+├── _headers
+├── _redirects
+├── index.html
 ├── privatliv.html
 ├── robots.txt
 ├── sitemap.xml
 ├── site.webmanifest
 ├── favicon.svg
 ├── favicon.png
-├── _headers
-├── MEDIA-GUIDE.md
+├── styles.css
+├── forbedringer.css
+├── undersider.css
+├── script.js
+├── scripts/
+│   ├── site_audit.py
+│   └── check_lighthouse.py
 ├── assets/
 │   ├── images/
 │   │   ├── dme-logo.svg
@@ -38,58 +46,56 @@ DMEMURER/
     └── murvaerk-reparation/index.html
 ```
 
-`styles.css` indeholder det fælles designsystem og hele forsiden. `undersider.css` indeholder de ekstra regler, som bruges på ydelsesoversigten og de enkelte ydelsessider. `script.js` samler sidens bevægelse, navigation, ydelsesvindue og kontaktformularens funktioner.
+`styles.css` er det fælles designsystem. `forbedringer.css` er et stabilt komponentlag til de dele, der ligger oven på grunddesignet: den brugerdefinerede opgavetypevælger, formularens byggeviser, Om DME-scenen, servicekortgenes ekstra links og Privatliv-siden. Det indlæses direkte fra HTML og er ikke længere afhængigt af JavaScript.
+
+`undersider.css` indeholder de ekstra regler, som bruges på ydelsesoversigten og de enkelte ydelsessider. `script.js` håndterer navigation, bevægelse, ydelsesdialog, formular, tilpasset dropdown og betinget bannerafspilning.
 
 ## Lokal afprøvning
 
-Der skal ikke installeres ekstra pakker.
+Der skal ikke installeres pakker for at køre selve hjemmesiden.
 
-Kør en enkel lokal webserver fra projektmappen:
+Start en webserver fra projektets rod:
 
 ```bash
 python -m http.server 8080
 ```
 
-På nogle Windows-installationer bruges i stedet:
+På nogle Windows-installationer:
 
 ```bash
 py -m http.server 8080
 ```
 
-Åbn derefter `http://localhost:8080/` i browseren.
+Åbn derefter:
 
-En lokal webserver er bedre end at åbne filerne direkte, fordi absolutte stier som `/styles.css` og `/assets/...` dermed opfører sig på samme måde som på det rigtige domæne.
+```text
+http://localhost:8080/
+```
 
-## Visuelt udtryk
+Kør den statiske kvalitetskontrol med:
 
-Designet tager udgangspunkt i DME-logoets sorte og gyldne udtryk. Forsiden bruger store, moderne overskrifter, tydelig kontrast og byggeinspirerede detaljer uden at gøre grænsefladen tung.
-
-Bevægelse bruges med et formål:
-
-- ydelseskortene ligger i et stabilt gitter og åbner deres oplysninger i et separat vindue
-- kontaktformularens aktive felt får en animeret murerlinje
-- en lille mur vokser i takt med, at formularens nødvendige oplysninger udfyldes
-- afsnit kommer roligt frem ved rulning
-- alle bevægelser respekterer brugerens valg om reduceret bevægelse
+```bash
+python scripts/site_audit.py
+node --check script.js
+```
 
 ## Bannerfilm
 
-Forsiden har en dedikeret plads til en lokal bannerfilm. Brug:
+Den aktive bannerfilm ligger her:
 
 ```text
-assets/video/banner-dme.webm
 assets/video/banner-dme.mp4
 ```
 
-De to kildehenvisninger ligger allerede som kommentarer i `index.html`. Når filmfilerne er lagt i mappen, fjernes kommentarerne omkring kildehenvisningerne.
+HTML-filen gemmer videostien i `data-src`. JavaScript sætter først den rigtige `src`, når brugeren ikke har valgt reduceret bevægelse eller Data Saver. Det betyder, at den tunge videofil undgås for brugere, der aktivt beder om mindre bevægelse eller lavere dataforbrug.
 
-Banneret er bevidst holdt rent, så filmen forbliver synlig. Teksten ligger oven på en kontrolleret toning i venstre side i stedet for et stort lag af dekorative elementer.
+Når en WebM-version senere tilføjes, skal den ligge før MP4-kilden i `<video>`-elementet.
 
-De nøjagtige anbefalinger til opløsning, varighed og filstørrelse står i `MEDIA-GUIDE.md`.
+En poster-fil bør tilføjes, når den er klar. Se `MEDIA-GUIDE.md`.
 
 ## Billeder til ydelser
 
-Hjemmesiden forventer disse filer i `assets/images/services/`:
+Hjemmesiden forventer følgende filer i `assets/images/services/`:
 
 ```text
 service-nybyggeri.webp
@@ -101,38 +107,108 @@ service-tilbygning.webp
 service-reparationer.webp
 ```
 
-Hvis et billede mangler, viser siden automatisk en rolig reserveflade, så kortenes størrelse og opbygning ikke brydes.
+Manglende billeder ødelægger ikke layoutet. Servicekortene viser en kontrolleret reserveflade, indtil de rigtige billeder er tilgængelige.
 
-Brug helst egne projektbilleder. De giver en mere troværdig præsentation af virksomheden end generiske billeder.
+Brug helst egne projektbilleder. Fjern EXIF/GPS-oplysninger fra billeder taget hos kunder, og publicér kun billeder, virksomheden har ret til at bruge.
 
 ## Kontaktformular
 
-Kontaktformularen sender ikke oplysninger til en database. Når den besøgende trykker på sendeknappen, oprettes en e-mail i den besøgendes eget e-mailprogram.
+Kontaktformularen sender ikke oplysninger til en database. Den bygger en færdig e-mail på brugerens enhed og åbner den valgte mailklient.
 
-Links fra de enkelte ydelsessider kan sende den valgte ydelse med tilbage til forsiden. Formularen læser valget og udfylder opgavetypen automatisk.
+Den synlige fallback-adresse er altid:
+
+```text
+info@dmemurer.dk
+```
+
+Det betyder, at brugeren stadig har en tydelig kontaktvej, hvis `mailto:` ikke er konfigureret på enheden.
+
+Hvis der senere bygges en rigtig formularbackend på Cloudflare Workers/Pages Functions, skal Privatliv-siden opdateres samtidig, og løsningen skal have passende misbrugsbeskyttelse og dokumenteret databehandling.
+
+## Tilgængelighed
+
+Projektet indeholder blandt andet:
+
+- spring-link til hovedindholdet
+- semantiske regioner og overskrifter
+- tastaturbetjent mobilnavigation
+- native `<dialog>` med fokusretur til udløseren
+- tastaturbetjent brugerdefineret opgavetypevælger
+- `aria-live` til formularstatus
+- reduceret bevægelse via `prefers-reduced-motion`
+- video, der ikke startes ved reduceret bevægelse eller Data Saver
+- almindelige crawlable links til alle ydelsessider, også uden JavaScript
+
+Manuel test med VoiceOver/NVDA og rigtige mobile enheder skal stadig udføres før offentlig lancering.
 
 ## Søgemaskineoptimering
 
-Sitet har en særskilt side for hver af de syv hovedydelser. De enkelte sider har egne overskrifter, beskrivelser, kanoniske adresser og strukturerede oplysninger.
+Sitet har særskilte sider for alle syv hovedydelser. De enkelte sider har egne titler, beskrivelser, kanoniske adresser og strukturerede data.
 
-Derudover indeholder projektet:
+Projektet indeholder også:
 
-- semantisk HTML
-- danske beskrivelser og sidetitler
-- intern sammenkobling mellem ydelserne
+- dansk semantisk indhold
+- interne links mellem ydelser
 - `robots.txt`
 - `sitemap.xml`
-- strukturerede oplysninger efter Schema.org
-- oplysninger til deling på sociale tjenester
+- Schema.org JSON-LD
+- Open Graph-data
+- canonical URLs
+- Cloudflare Pages-redirects for kendte URL-varianter
 
-Virksomhedsoplysninger som CVR-nummer, telefonnummer, offentlig adresse, serviceområde og åbningstider bør først tilføjes, når de er verificeret. De må ikke gættes.
+Virksomhedsoplysninger som CVR-nummer, telefonnummer, fysisk adresse og serviceområde må kun tilføjes, når de er verificeret.
 
 ## Sikkerhed og privatliv
 
-`_headers` indeholder blandt andet beskyttelse mod indlejring, begrænset adgang til enhedsfunktioner, stram indholdspolitik og sikker transport over HTTPS.
+`_headers` indeholder blandt andet:
 
-Hjemmesiden bruger i den nuværende udgave ingen statistik-, annoncerings- eller sporingsværktøjer fra tredjepart. Kontaktformularens oplysninger gemmes ikke på hjemmesiden.
+- Content Security Policy
+- HSTS
+- beskyttelse mod framing
+- `nosniff`
+- stram referrer-policy
+- begrænset adgang til kamera, mikrofon, geolocation m.m.
+- cross-origin-isolation-relaterede headers
+
+Medier bruger ikke længere `immutable`, fordi de nuværende menneskelæsbare filnavne skal kunne erstattes uden at efterlade en gammel version i browserens cache i en måned.
+
+Sitet bruger ingen tredjepartsanalyse, annoncering eller tracking i den nuværende udgave.
+
+## Automatiske kvalitetskontroller
+
+`.github/workflows/quality.yml` kører ved pull requests og ved pushes til `master`.
+
+Den kontrollerer:
+
+- interne links og lokale filer
+- dublerede HTML-id'er
+- meta description, title, canonical og `lang`
+- gyldig JSON-LD
+- nødvendige sikkerheds-/deployfiler
+- maksimumstørrelse på bannerfilm og servicebilleder
+- kendte udvikler-placeholdertekster
+- JavaScript-syntaks
+- Lighthouse på forsiden
+
+Nuværende Lighthouse-minimum i CI:
+
+```text
+Performance:      80
+Accessibility:    95
+Best Practices:   95
+SEO:              95
+```
+
+Når alle endelige medier er på plads, bør Performance-grænsen hæves, hvis den stabile produktionstest tillader det.
+
+## Cloudflare Pages
+
+Projektet er struktureret, så repository-roden kan bruges som statisk output.
+
+`_headers` og `_redirects` ligger i roden og læses af Cloudflare Pages. Hostname-redirect fra `www.dmemurer.dk` til `dmemurer.dk` samt tvungen HTTP → HTTPS skal konfigureres på Cloudflare zone-niveau, fordi Pages `_redirects` ikke understøtter domænebaserede redirects.
+
+Efter deployment skal de faktiske response headers, 404-status, redirects og canonical URL'er verificeres på det rigtige domæne.
 
 ## Mediefiler
 
-Se `MEDIA-GUIDE.md` for de præcise filnavne og anbefalede mål til bannerfilm, ydelsesbilleder, logo og delingsbillede.
+Se `MEDIA-GUIDE.md` for filnavne, størrelser og den anbefalede billed-/videoproces.
