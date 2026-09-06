@@ -1,6 +1,6 @@
 # Medievejledning til DME Murerforretning
 
-Denne fil beskriver præcis, hvilke mediefiler hjemmesiden forventer, hvor de skal placeres, og hvilke mål der anbefales.
+Denne fil beskriver de produktionsmedier, hjemmesiden forventer, og hvordan de bør klargøres før upload.
 
 ## Bannerfilm
 
@@ -10,26 +10,48 @@ Placering:
 assets/video/
 ```
 
-Brug disse filnavne:
+Aktiv fil:
 
 ```text
-banner-dme.webm
 banner-dme.mp4
 ```
 
-Anbefalet format:
+Fremtidig ekstra kilde:
+
+```text
+banner-dme.webm
+```
+
+Anbefaling:
 
 - opløsning: **1920 × 1080 px**
 - billedforhold: **16:9**
 - længde: **8–15 sekunder**
-- billedhastighed: **24–30 billeder pr. sekund**
-- lyd: **ingen lyd**
-- motiv: roligt, professionelt murerarbejde med god plads omkring det vigtigste motiv
-- filstørrelse: hold den så lav som muligt uden synlige komprimeringsfejl; sigt gerne efter højst cirka **6–8 MB** pr. fil
+- billedhastighed: **24–30 fps**
+- lyd: fjern lydsporet helt
+- MP4: H.264, `yuv420p`, web/fast-start
+- WebM: komprimeret alternativ, helst mindre end MP4
+- maksimum i projektets CI: **15 MiB** for MP4
+- praktisk mål: cirka **4–10 MB**, hvis kvaliteten stadig er ren
 
-Når filerne er lagt i mappen, fjernes kommentarerne omkring de to `<source>`-linjer i bannerets `<video>`-element i `index.html`.
+Banneret indlæses betinget. Brugere med `prefers-reduced-motion` eller Data Saver får ikke startet videodownloaden via den normale JavaScript-flow.
 
-Banneret er bevidst lavet, så filmen kan ses tydeligt. Der ligger kun en kontrolleret toning over filmen for at sikre læsbar tekst; der er ikke længere tunge grafiske lag, som skjuler motivet.
+## Banner-poster
+
+Når en god frame er valgt, tilføj:
+
+```text
+assets/images/banner-dme-poster.webp
+```
+
+Anbefaling:
+
+- 1920 × 1080 px
+- WebP
+- cirka 100–250 KB
+- motiv og beskæring skal matche den første synlige videoframe så tæt som muligt
+
+Posterfilen er endnu ikke i projektet og må først kobles til `<video>`, når den faktiske fil er uploadet.
 
 ## Billeder til ydelser
 
@@ -39,15 +61,7 @@ Placering:
 assets/images/services/
 ```
 
-Alle billeder bør leveres i:
-
-- opløsning: **1800 × 1200 px**
-- billedforhold: **3:2**
-- filformat: **WebP**
-- anbefalet filstørrelse: helst **under 350 KB** pr. billede
-- motiv: ægte projektbilleder, hvis muligt
-
-Brug præcis disse filnavne:
+Brug præcis disse hovedfilnavne:
 
 ```text
 service-nybyggeri.webp
@@ -59,7 +73,36 @@ service-tilbygning.webp
 service-reparationer.webp
 ```
 
-Hvis et billede endnu ikke er lagt ind, viser hjemmesiden automatisk en rolig, mørk reserveflade. Et manglende billede ødelægger derfor ikke kortets størrelse eller gitterets opbygning.
+Hovedbilleder:
+
+- opløsning: **1800 × 1200 px**
+- billedforhold: **3:2**
+- format: **WebP**
+- mål: cirka **200–350 KB**
+- CI-grænse: **450 KiB** pr. `service-*.webp`
+
+Når de endelige billeder er klar, bør der også laves responsive varianter omkring:
+
+```text
+640 px bred
+960 px bred
+1400 px bred
+1800 px bred
+```
+
+De kan derefter kobles på med `srcset` og `sizes`, så mobile enheder ikke behøver hente desktopversionen.
+
+## Fotoarbejdsgang
+
+For egne projektbilleder:
+
+1. Vælg billeder med rolig komposition og tydeligt håndværk.
+2. Beskær ensartet til 3:2.
+3. Ret hvidbalance, eksponering og perspektiv uden at få billedet til at se kunstigt ud.
+4. Hold farvebehandlingen ens på tværs af alle syv ydelser.
+5. Fjern EXIF/GPS-metadata før publicering.
+6. Kontrollér at der ikke vises kunders navne, adresser, nummerplader eller personer uden relevant tilladelse.
+7. Eksportér først derefter de endelige WebP-varianter.
 
 ## Logo
 
@@ -69,26 +112,26 @@ Det aktive logo er:
 assets/images/dme-logo.svg
 ```
 
-Logoet bruges direkte som SVG for at bevare skarphed på både mobil, almindelige skærme og skærme med høj pixeltæthed.
+Logoet beholdes som det er.
 
 ## Billede til deling på sociale medier
 
-Fil:
+Nuværende fil:
 
 ```text
 assets/images/og-dme.jpg
 ```
 
-Anbefalet opløsning:
+Opløsning:
 
 ```text
 1200 × 630 px
 ```
 
-Billedet bruges, når forsiden deles på tjenester, der læser Open Graph-oplysninger.
+Når de autentiske DME-projektbilleder er klar, bør der laves en ny bevidst social komposition. De enkelte ydelsessider kan også få egne relevante Open Graph-billeder senere.
 
-## Praktiske billedråd
+## Cache og udskiftning
 
-Undgå at lægge originale mobilfotos på 5–15 MB direkte i projektet. Beskær først til det anbefalede billedforhold, skaler til den anbefalede opløsning og eksportér derefter til WebP med en kvalitet, hvor mursten, fuger og kanter stadig står tydeligt.
+Mediefilerne bruger menneskelæsbare, stabile filnavne og er derfor **ikke** markeret `immutable` i `_headers`.
 
-Vælg billeder med rolig komposition. Servicekortene indeholder allerede tekst og bevægelse, så billeder med meget støj, store vandmærker eller tekst oven på motivet bør undgås.
+Det gør det muligt at erstatte et billede eller en video uden at en browser nødvendigvis holder fast i den gamle fil i en hel måned. Hvis projektet senere går over til filnavne med indholdshash, kan lang `immutable` cache aktiveres igen.
