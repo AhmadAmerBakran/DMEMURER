@@ -1,0 +1,20 @@
+# IDEs
+.idea/
+.vscode/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local tooling and reports
+node_modules/
+.lighthouseci/
+lighthouse-report.*
+coverage/
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
