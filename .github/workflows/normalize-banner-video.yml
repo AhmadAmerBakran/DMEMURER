@@ -34,18 +34,8 @@ jobs:
           set -euo pipefail
           file="assets/video/banner-dme.mp4"
           audio_count="$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$file" | grep -c . || true)"
-          moov="$(python - <<'PY'
-from pathlib import Path
-p=Path('assets/video/banner-dme.mp4').read_bytes()
-print(p.find(b'moov'))
-PY
-)"
-          mdat="$(python - <<'PY'
-from pathlib import Path
-p=Path('assets/video/banner-dme.mp4').read_bytes()
-print(p.find(b'mdat'))
-PY
-)"
+          moov="$(python -c "from pathlib import Path; d=Path('$file').read_bytes(); print(d.find(b'moov'))")"
+          mdat="$(python -c "from pathlib import Path; d=Path('$file').read_bytes(); print(d.find(b'mdat'))")"
           if [[ "$audio_count" != "0" || "$moov" -gt "$mdat" ]]; then
             ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -c:v copy -an -movflags +faststart "${file%.mp4}.normalized.mp4"
             mv "${file%.mp4}.normalized.mp4" "$file"
