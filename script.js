@@ -9,6 +9,13 @@
 
   root.classList.add('js');
 
+  // Use the validated logo asset everywhere. The previous binary WebP was corrupted during upload.
+  doc.querySelectorAll('img[src$="dme-logo.webp"]').forEach(img => {
+    img.src = '/assets/images/dme-logo.svg';
+    img.width = 360;
+    img.height = 240;
+  });
+
   // Existing subpages keep their legacy layer. The homepage gets the dedicated god.css layer in index.html.
   if (doc.querySelector('.subpage-hero,.simple-page,.service-page,.section-services')) {
     const legacy = doc.createElement('link');
