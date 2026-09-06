@@ -4,67 +4,138 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0c0d">
-  <meta name="description" content="Læs hvordan DME Murerforretning håndterer oplysninger ved brug af dmemurer.dk og ved kontakt via e-mail.">
-  <meta name="robots" content="index,follow">
+  <meta name="description" content="Læs hvordan DME Murerforretning håndterer personoplysninger, henvendelser og tekniske oplysninger på dmemurer.dk.">
+  <meta name="robots" content="index,follow,max-snippet:-1">
   <link rel="canonical" href="https://dmemurer.dk/privatliv.html">
+  <link rel="alternate" hreflang="da-DK" href="https://dmemurer.dk/privatliv.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
+  <link rel="preload" as="image" href="/assets/images/dme-logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/forbedringer.css">
   <script src="/script.js" defer></script>
   <title>Privatliv og personoplysninger | DME Murerforretning</title>
 </head>
-<body id="top">
+<body id="top" class="privatlivsside">
   <a class="spring-link" href="#indhold">Gå direkte til indholdet</a>
-  <header class="simpelt-hoved">
+  <div class="laese-fremdrift" aria-hidden="true"><span data-laese-fremdrift></span></div>
+
+  <header class="sidehoved er-rullet" data-sidehoved>
     <div class="ramme sidehoved__indre">
       <a class="maerke" href="/" aria-label="DME Murerforretning – forsiden">
-        <img src="/assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning">
+        <img src="/assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning" fetchpriority="high" decoding="async">
       </a>
-      <a class="knap knap--guld" href="/#kontakt"><span>Kontakt os</span><i aria-hidden="true">↗</i></a>
+
+      <nav class="navigation" id="navigation" aria-label="Hovednavigation" data-navigation>
+        <a href="/#ydelser">Ydelser</a>
+        <a href="/#om-os">Om DME</a>
+        <a href="/#arbejdsform">Sådan arbejder vi</a>
+        <a href="/#spoergsmaal">Spørgsmål</a>
+        <a class="navigation__tilbud" href="/#kontakt">Få et tilbud</a>
+      </nav>
+
+      <button class="menuknap" type="button" aria-expanded="false" aria-controls="navigation" aria-label="Åbn menu" data-menuknap>
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <main id="indhold" class="simple-page">
-    <div class="simple-content">
-      <p class="fejlkode">Privatliv</p>
-      <h1>Privatliv og personoplysninger</h1>
-      <p>Dmemurer.dk er bevidst bygget med meget begrænset dataindsamling. Hjemmesiden bruger i sin nuværende form hverken analyseværktøjer, annoncesporing eller markedsføringscookies.</p>
-      <p><strong>Senest opdateret:</strong> 6. september 2026.</p>
+  <main id="indhold">
+    <section class="privatlivshero" aria-labelledby="privatliv-overskrift">
+      <div class="ramme privatlivshero__indre">
+        <div>
+          <p class="overlinje">Privatliv og personoplysninger</p>
+          <h1 id="privatliv-overskrift">Dine oplysninger skal behandles <span>ordentligt.</span></h1>
+          <p class="privatlivshero__intro">DME Murerforretning indsamler så få oplysninger som muligt via hjemmesiden. Her kan du se, hvad der sker med de oplysninger, du selv vælger at sende til os.</p>
+        </div>
+        <div class="privatlivshero__maerke" aria-label="Kort fortalt">
+          <strong>Kort fortalt</strong>
+          Ingen statistiksporing. Ingen markedsføringsprofiler. Kontaktformularen gemmer ikke dine oplysninger på hjemmesiden.
+        </div>
+      </div>
+    </section>
 
-      <h2>Hvem er dataansvarlig?</h2>
-      <p>DME Murerforretning er dataansvarlig for de personoplysninger, virksomheden modtager, når du kontakter os. Spørgsmål om personoplysninger kan sendes til <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+    <section class="privatlivsindhold">
+      <div class="ramme privatliv__gitter">
+        <nav class="privatliv__menu" aria-label="Indhold på siden">
+          <strong>På denne side</strong>
+          <a href="#dataansvarlig">Dataansvarlig</a>
+          <a href="#formular">Kontaktformular</a>
+          <a href="#email">Når du skriver til os</a>
+          <a href="#opbevaring">Opbevaring</a>
+          <a href="#statistik">Statistik</a>
+          <a href="#drift">Teknisk drift</a>
+          <a href="#rettigheder">Dine rettigheder</a>
+          <a href="#kontakt-privatliv">Kontakt</a>
+        </nav>
 
-      <h2>Kontaktformularen gemmer ikke dine oplysninger</h2>
-      <p>Når du udfylder formularen på forsiden og trykker på knappen, bliver oplysningerne ikke sendt til en database eller gemt på dmemurer.dk. Formularen opretter i stedet en kladde i dit eget e-mailprogram. Du vælger selv, om du vil sende e-mailen, og du kan tilføje eller fjerne oplysninger og vedhæfte billeder, inden den sendes.</p>
+        <article class="privatliv__tekst">
+          <p>Dmemurer.dk er bevidst bygget med meget begrænset dataindsamling. Hjemmesiden bruger i sin nuværende form ikke analyseværktøjer, markedsføringssporing eller profilering af besøgende.</p>
+          <p class="privatliv__dato"><strong>Senest opdateret:</strong> 6. september 2026</p>
 
-      <h2>Når du sender os en e-mail</h2>
-      <p>Hvis du sender en e-mail til DME Murerforretning, behandler vi de oplysninger, du selv har valgt at sende, eksempelvis navn, kontaktoplysninger, beskrivelse af opgaven og billeder. Oplysningerne bruges til at besvare din henvendelse, vurdere opgaven og – hvis det bliver relevant – forberede eller gennemføre en aftale.</p>
-      <p>Behandlingsgrundlaget afhænger af henvendelsen. Det kan blandt andet være nødvendigt at behandle oplysninger for at besvare en anmodning, du har sendt før en eventuel aftale, eller for at kunne opfylde en aftale.</p>
+          <section id="dataansvarlig">
+            <h2>Hvem er dataansvarlig?</h2>
+            <p>DME Murerforretning er dataansvarlig for de personoplysninger, virksomheden modtager, når du kontakter os. Spørgsmål om personoplysninger kan sendes til <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+          </section>
 
-      <h2>Hvor længe opbevares oplysninger?</h2>
-      <p>Oplysninger fra henvendelser opbevares ikke længere, end der er et sagligt behov for dem, medmindre DME Murerforretning er forpligtet til at gemme bestemte oplysninger i længere tid efter gældende regler, eksempelvis i forbindelse med bogføring eller dokumentation af en udført opgave.</p>
+          <section id="formular">
+            <h2>Kontaktformularen gemmer ikke dine oplysninger</h2>
+            <p>Når du udfylder formularen på forsiden, bliver oplysningerne ikke sendt til en database eller gemt på dmemurer.dk. Formularen samler i stedet oplysningerne i en e-mail på din egen enhed.</p>
+            <p>Du vælger selv, om du vil sende e-mailen, og du kan ændre teksten eller vedhæfte billeder, inden den sendes.</p>
+          </section>
 
-      <h2>Cookies og statistik</h2>
-      <p>Hjemmesiden sætter i sin nuværende version ikke cookies til statistik, markedsføring eller profilering. Der er heller ikke indlejret tredjepartsanalyse eller sporingsværktøjer fra sociale medier.</p>
+          <section id="email">
+            <h2>Når du sender os en e-mail</h2>
+            <p>Hvis du sender en e-mail til DME Murerforretning, behandler vi de oplysninger, du selv har valgt at sende. Det kan eksempelvis være navn, kontaktoplysninger, en beskrivelse af opgaven og billeder.</p>
+            <p>Oplysningerne bruges til at besvare din henvendelse, vurdere opgaven og – hvis det bliver relevant – forberede eller gennemføre en aftale. Behandlingsgrundlaget afhænger af den konkrete henvendelse og den eventuelle aftale.</p>
+          </section>
 
-      <h2>Teknisk drift og sikkerhed</h2>
-      <p>Som ved almindelig webhosting kan hosting-, netværks- og sikkerhedstjenester behandle tekniske oplysninger, eksempelvis IP-adresse og oplysninger om browseranmodninger, når siden leveres og beskyttes mod misbrug. Sådanne oplysninger behandles som led i den tekniske drift og sikkerhed af hjemmesiden.</p>
+          <section id="opbevaring">
+            <h2>Hvor længe opbevares oplysninger?</h2>
+            <p>Oplysninger fra henvendelser opbevares ikke længere, end der er et sagligt behov for dem, medmindre DME Murerforretning efter gældende regler skal gemme bestemte oplysninger i længere tid, eksempelvis i forbindelse med bogføring eller dokumentation af en udført opgave.</p>
+          </section>
 
-      <h2>Eksternt indhold</h2>
-      <p>Hjemmesiden indlæser logo, billeder, video, stilark og JavaScript fra dmemurer.dk selv. Der er ikke indlejret eksterne kort, analyseværktøjer eller sociale medier. Hvis sådanne funktioner bliver tilføjet senere, bliver denne side opdateret, hvis det ændrer behandlingen af personoplysninger eller brugen af cookies.</p>
+          <section id="statistik">
+            <h2>Statistik og små datafiler</h2>
+            <p>Hjemmesiden bruger i sin nuværende version ikke små datafiler til statistik, markedsføring eller profilering. Der er heller ikke indlejret tredjepartsanalyse eller sporing fra sociale medier.</p>
+          </section>
 
-      <h2>Dine rettigheder</h2>
-      <p>Afhængigt af situationen kan du have ret til indsigt i de oplysninger, der behandles om dig, samt ret til at få urigtige oplysninger rettet eller i visse tilfælde slettet. Du kan også have ret til begrænsning af behandling eller til at gøre indsigelse. Hvis du vil gøre brug af dine rettigheder, kan du kontakte os på <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+          <section id="drift">
+            <h2>Teknisk drift og sikkerhed</h2>
+            <p>Som ved almindelig hjemmesidedrift kan hosting-, netværks- og sikkerhedstjenester behandle tekniske oplysninger, eksempelvis IP-adresse og oplysninger om browseranmodninger, når siden leveres og beskyttes mod misbrug. Sådanne oplysninger behandles som led i den tekniske drift og sikkerhed.</p>
+            <p>Hjemmesidens logo, billeder, film, stilark og programkode leveres fra dmemurer.dk. Der er i den nuværende løsning ikke indlejret eksterne kort, analyseværktøjer eller sociale medier.</p>
+          </section>
 
-      <h2>Kontakt</h2>
-      <p>Har du spørgsmål til denne side eller til behandlingen af personoplysninger, er du velkommen til at skrive til <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+          <section id="rettigheder">
+            <h2>Dine rettigheder</h2>
+            <p>Afhængigt af situationen kan du have ret til indsigt i de oplysninger, der behandles om dig, samt ret til at få urigtige oplysninger rettet eller i visse tilfælde slettet. Du kan også have ret til begrænsning af behandling eller til at gøre indsigelse.</p>
+            <p>Hvis du vil gøre brug af dine rettigheder, kan du kontakte os på <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+          </section>
 
-      <p><a class="knap knap--guld" href="/"><span>← Tilbage til forsiden</span></a></p>
-    </div>
+          <section id="kontakt-privatliv">
+            <h2>Kontakt</h2>
+            <p>Har du spørgsmål til denne side eller til behandlingen af personoplysninger, er du velkommen til at skrive til <a href="mailto:info@dmemurer.dk">info@dmemurer.dk</a>.</p>
+            <div class="privatliv__handling">
+              <a class="knap knap--guld" href="/"><span>Tilbage til forsiden</span><i aria-hidden="true">↗</i></a>
+              <a class="knap" href="/#kontakt"><span>Kontakt DME</span><i aria-hidden="true">↗</i></a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
   </main>
 
-  <footer class="simpel-sidefod">
-    <div class="ramme"><span>© <span data-aar></span> DME Murerforretning. Alle rettigheder forbeholdes.</span><a href="/">Forside</a></div>
+  <footer class="sidefod">
+    <div class="ramme sidefod__top">
+      <a class="sidefod__maerke" href="/" aria-label="DME Murerforretning – forsiden"><img src="/assets/images/dme-logo.svg" width="960" height="608" alt="DME Murerforretning" loading="lazy" decoding="async"></a>
+      <p>Præcist murerarbejde.<br>Klare aftaler.</p>
+      <a class="sidefod__mail" href="mailto:info@dmemurer.dk">info@dmemurer.dk <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="ramme sidefod__bund">
+      <span>© <span data-aar></span> DME Murerforretning</span>
+      <nav aria-label="Genveje i sidefoden"><a href="/#ydelser">Ydelser</a><a href="/#om-os">Om DME</a><a href="/#kontakt">Kontakt</a><a href="/privatliv.html" aria-current="page">Privatliv</a></nav>
+      <a href="#top">Til toppen ↑</a>
+    </div>
   </footer>
 </body>
 </html>
