@@ -53,8 +53,8 @@ if not (1280 <= w <= 1920 and 720 <= h <= 1080):
     raise SystemExit('Banneropløsningen skal ligge mellem 1280×720 og 1920×1080.')
 if not (23 <= fps <= 30.1):
     raise SystemExit('Bannerfilmen skal være ca. 24–30 fps for effektiv webafspilning.')
-if not (6 <= duration <= 20):
-    raise SystemExit('Bannerfilmen skal være en kort loop på ca. 6–20 sekunder.')
+if not (6 <= duration <= 25):
+    raise SystemExit('Bannerfilmen skal være en kort loop på ca. 6–25 sekunder.')
 PY
 
 python - "$file" <<'PY'
