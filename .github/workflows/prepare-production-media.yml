@@ -1,0 +1,101 @@
+name: Prepare production media
+
+on:
+  push:
+    branches: [production-hardening-prelaunch]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepare-production-media
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: production-hardening-prelaunch
+          fetch-depth: 0
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Normalize banner and generate optimized media
+        shell: bash
+        run: |
+          set -euo pipefail
+          mp4="assets/video/banner-dme.mp4"
+
+          ffmpeg -hide_banner -loglevel error -y -i "$mp4" \
+            -map 0:v:0 -c:v copy -an -movflags +faststart \
+            /tmp/banner-dme.mp4
+          mv /tmp/banner-dme.mp4 "$mp4"
+
+          ffmpeg -hide_banner -loglevel error -y -i "$mp4" \
+            -map 0:v:0 -an -c:v libvpx-vp9 -b:v 0 -crf 36 \
+            -deadline good -cpu-used 2 -row-mt 1 -pix_fmt yuv420p \
+            assets/video/banner-dme.webm
+
+          ffmpeg -hide_banner -loglevel error -y -ss 8 -i "$mp4" \
+            -frames:v 1 -vf "scale=1920:1080" \
+            -c:v libwebp -quality 82 -compression_level 6 \
+            assets/images/banner-dme-poster.webp
+
+          ffmpeg -hide_banner -loglevel error -y -ss 8 -i "$mp4" \
+            -frames:v 1 -vf "scale=1200:-2,crop=1200:630" \
+            -q:v 3 -map_metadata -1 \
+            assets/images/og-dme.jpg
+
+          ffmpeg -hide_banner -loglevel error -y \
+            -i assets/images/services/service-nybyggeri.webp \
+            -vf "crop=1536:1024:0:500,scale=1500:1000" \
+            -c:v libwebp -quality 82 -compression_level 6 -map_metadata -1 \
+            /tmp/nybyggeri.webp
+          mv /tmp/nybyggeri.webp assets/images/services/service-nybyggeri.webp
+
+          ffmpeg -hide_banner -loglevel error -y \
+            -i assets/images/services/service-renovering.webp \
+            -vf "crop=2537:1691:0:900,scale=1500:1000" \
+            -c:v libwebp -quality 82 -compression_level 6 -map_metadata -1 \
+            /tmp/renovering.webp
+          mv /tmp/renovering.webp assets/images/services/service-renovering.webp
+
+      - name: Verify generated media
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,pix_fmt,width,height -of default=nw=1 assets/video/banner-dme.mp4
+          ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 assets/video/banner-dme.mp4 | test "$(cat | wc -l)" -eq 0
+          test -s assets/video/banner-dme.webm
+          test -s assets/images/banner-dme-poster.webp
+          test -s assets/images/og-dme.jpg
+          test -s assets/images/services/service-nybyggeri.webp
+          test -s assets/images/services/service-renovering.webp
+
+      - name: Commit optimized media
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/video/banner-dme.mp4 assets/video/banner-dme.webm \
+            assets/images/banner-dme-poster.webp assets/images/og-dme.jpg \
+            assets/images/services/service-nybyggeri.webp \
+            assets/images/services/service-renovering.webp
+
+          if git diff --cached --quiet; then
+            echo "Production media already optimized."
+            exit 0
+          fi
+
+          git commit -m "Optimize production media for web delivery"
+          git push origin HEAD:production-hardening-prelaunch

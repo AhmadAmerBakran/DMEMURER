@@ -12,3 +12,4 @@ Anbefalet opløsning er **1920 × 1080 px** i billedforholdet **16:9**. Filmen b
 Når filerne er lagt ind, fjernes kommentarerne omkring de to kildehenvisninger i bannerets `<video>`-element i `index.html`.
 
 Se `../../MEDIA-GUIDE.md` for den fulde medievejledning.
+
