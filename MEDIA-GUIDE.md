@@ -1,79 +1,94 @@
-# DME website media guide
+# Medievejledning til DME Murerforretning
 
-The `god-design-construction-motion` branch is already wired for the media below. Use the exact paths and filenames so no code changes are needed beyond enabling the hero video sources.
+Denne fil beskriver præcis, hvilke mediefiler hjemmesiden forventer, hvor de skal placeres, og hvilke mål der anbefales.
 
-## 1. Hero banner video
+## Bannerfilm
 
-Add both formats when possible:
+Placering:
 
-- `assets/video/hero-banner.webm`
-- `assets/video/hero-banner.mp4`
-
-Recommended master export:
-
-- Resolution: **1920 × 1080 px**
-- Aspect ratio: **16:9**
-- Duration: **8–15 seconds**
-- Frame rate: **24–30 fps**
-- Audio: **no audio / muted**
-- Composition: keep the most important action in the **center 60%** because mobile uses a tighter crop
-- Target size: ideally **under 8 MB per format**
-- WebM: **VP9 or AV1**
-- MP4: **H.264**
-
-After adding the files, open `index.html` and uncomment the two `<source>` lines inside `.dme-hero__video`:
-
-```html
-<source src="/assets/video/hero-banner.webm" type="video/webm">
-<source src="/assets/video/hero-banner.mp4" type="video/mp4">
+```text
+assets/video/
 ```
 
-The animated construction scene remains as a designed fallback, so the hero still looks intentional if the video is unavailable or motion is reduced.
+Brug disse filnavne:
 
-### Optional hero poster
+```text
+banner-dme.webm
+banner-dme.mp4
+```
 
-If you want a poster frame while the video initializes:
+Anbefalet format:
 
-- Filename: `assets/images/hero-poster.webp`
-- Resolution: **1920 × 1080 px**
-- Format: **WebP**
-- Target size: ideally **under 300 KB**
+- opløsning: **1920 × 1080 px**
+- billedforhold: **16:9**
+- længde: **8–15 sekunder**
+- billedhastighed: **24–30 billeder pr. sekund**
+- lyd: **ingen lyd**
+- motiv: roligt, professionelt murerarbejde med god plads omkring det vigtigste motiv
+- filstørrelse: hold den så lav som muligt uden synlige komprimeringsfejl; sigt gerne efter højst cirka **6–8 MB** pr. fil
 
-Only add a `poster="/assets/images/hero-poster.webp"` attribute to the hero `<video>` after this file exists, to avoid an unnecessary 404 request.
+Når filerne er lagt i mappen, fjernes kommentarerne omkring de to `<source>`-linjer i bannerets `<video>`-element i `index.html`.
 
-## 2. Service images
+Banneret er bevidst lavet, så filmen kan ses tydeligt. Der ligger kun en kontrolleret toning over filmen for at sikre læsbar tekst; der er ikke længere tunge grafiske lag, som skjuler motivet.
 
-Use landscape **3:2** WebP images.
+## Billeder til ydelser
 
-Recommended export:
+Placering:
 
-- Resolution: **1800 × 1200 px**
-- Format: **WebP**
-- Target size: ideally **under 350 KB each**
-- Crop safety: keep the subject inside the **center 80%** of the frame
+```text
+assets/images/services/
+```
 
-Exact filenames:
+Alle billeder bør leveres i:
 
-- `assets/images/services/service-nybyggeri.webp`
-- `assets/images/services/service-fliser-klinker.webp`
-- `assets/images/services/service-badevaerelser.webp`
-- `assets/images/services/service-facader-fuger.webp`
-- `assets/images/services/service-renovering.webp`
-- `assets/images/services/service-tilbygning.webp`
-- `assets/images/services/service-reparationer.webp`
+- opløsning: **1800 × 1200 px**
+- billedforhold: **3:2**
+- filformat: **WebP**
+- anbefalet filstørrelse: helst **under 350 KB** pr. billede
+- motiv: ægte projektbilleder, hvis muligt
 
-Until each image exists, the service card displays its built-in construction/blueprint placeholder instead of a broken image.
+Brug præcis disse filnavne:
 
-## 3. Social sharing image
+```text
+service-nybyggeri.webp
+service-fliser-klinker.webp
+service-badevaerelser.webp
+service-facader-fuger.webp
+service-renovering.webp
+service-tilbygning.webp
+service-reparationer.webp
+```
 
-- Filename: `assets/images/og-dme.jpg`
-- Exact resolution: **1200 × 630 px**
-- Recommended target size: **under 400 KB**
+Hvis et billede endnu ikke er lagt ind, viser hjemmesiden automatisk en rolig, mørk reserveflade. Et manglende billede ødelægger derfor ikke kortets størrelse eller gitterets opbygning.
 
-## 4. Logo
+## Logo
 
-The site currently uses:
+Det aktive logo er:
 
-- `assets/images/dme-logo.webp`
+```text
+assets/images/dme-logo.svg
+```
 
-Keep the logo on a transparent or black-compatible background and avoid adding extra empty padding around it. The layout handles responsive sizing automatically.
+Logoet bruges direkte som SVG for at bevare skarphed på både mobil, almindelige skærme og skærme med høj pixeltæthed.
+
+## Billede til deling på sociale medier
+
+Fil:
+
+```text
+assets/images/og-dme.jpg
+```
+
+Anbefalet opløsning:
+
+```text
+1200 × 630 px
+```
+
+Billedet bruges, når forsiden deles på tjenester, der læser Open Graph-oplysninger.
+
+## Praktiske billedråd
+
+Undgå at lægge originale mobilfotos på 5–15 MB direkte i projektet. Beskær først til det anbefalede billedforhold, skaler til den anbefalede opløsning og eksportér derefter til WebP med en kvalitet, hvor mursten, fuger og kanter stadig står tydeligt.
+
+Vælg billeder med rolig komposition. Servicekortene indeholder allerede tekst og bevægelse, så billeder med meget støj, store vandmærker eller tekst oven på motivet bør undgås.
