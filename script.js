@@ -5,6 +5,15 @@
   const side = dokument.body;
   const reduceretBevaegelse = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  if (!dokument.querySelector('link[href="/forbedringer.css"]')) {
+    const stil = dokument.createElement('link');
+    stil.rel = 'stylesheet';
+    stil.href = '/forbedringer.css';
+    dokument.head.append(stil);
+  }
+
+  dokument.querySelector('[data-filmplads]')?.remove();
+
   const ydelser = {
     nybyggeri: {
       navn: 'Nybyggeri',
@@ -69,16 +78,31 @@
 
   const opdaterRulning = () => {
     const y = window.scrollY;
-    sidehoved?.classList.toggle('er-rullet', y > 24);
+    sidehoved?.classList.toggle('er-rullet', y > 24 || side.classList.contains('privatlivsside'));
     if (!fremdrift) return;
     const hoejde = dokument.documentElement.scrollHeight - window.innerHeight;
     const andel = hoejde > 0 ? Math.min(y / hoejde, 1) : 0;
     fremdrift.style.transform = `scaleX(${andel})`;
   };
 
+  const genopretSidevisning = () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      opdaterRulning();
+      dokument.querySelectorAll('.maerke img,.sidefod__maerke img').forEach(billede => {
+        if (!billede.complete || billede.naturalWidth === 0) {
+          const kilde = billede.getAttribute('src');
+          if (!kilde) return;
+          billede.removeAttribute('src');
+          requestAnimationFrame(() => billede.setAttribute('src', kilde));
+        }
+      });
+    }));
+  };
+
   opdaterRulning();
   addEventListener('scroll', opdaterRulning, { passive: true });
   addEventListener('resize', opdaterRulning, { passive: true });
+  addEventListener('pageshow', genopretSidevisning);
 
   const menuknap = dokument.querySelector('[data-menuknap]');
   const navigation = dokument.querySelector('[data-navigation]');
@@ -189,18 +213,8 @@
   const ydelsesvalg = formular?.querySelector('[data-ydelsesvalg]');
   const formularstatus = formular?.querySelector('[data-formularstatus]');
   const byggeviser = dokument.querySelector('[data-byggeviser]');
-
-  const gaTilTilbud = navn => {
-    if (!formular || !ydelsesvalg) return;
-    const mulighed = [...ydelsesvalg.options].find(option => option.textContent.trim() === navn);
-    if (mulighed) ydelsesvalg.value = mulighed.value || mulighed.textContent;
-    lukDialog();
-    formular.scrollIntoView({ behavior: reduceretBevaegelse ? 'auto' : 'smooth', block: 'center' });
-    setTimeout(() => formular.querySelector('input[name="navn"]')?.focus({ preventScroll: true }), reduceretBevaegelse ? 0 : 550);
-    opdaterByggeviser();
-  };
-
-  dialogTilbud?.addEventListener('click', () => gaTilTilbud(aktivYdelse));
+  const sendetekst = formular?.querySelector('.kontaktformular__send span');
+  if (sendetekst) sendetekst.textContent = 'Send forespørgsel';
 
   const kraevedeFelter = formular ? [...formular.querySelectorAll('input[required]:not([type="checkbox"]),select[required],textarea[required],input[type="checkbox"][required]')] : [];
 
@@ -215,18 +229,160 @@
     byggeviser.dataset.niveau = String(Math.min(antal, 5));
   }
 
+  const opretTilpassetValg = select => {
+    if (!select || select.dataset.tilpasset === 'ja') return null;
+    select.dataset.tilpasset = 'ja';
+    select.classList.add('valg-original');
+
+    const felt = select.closest('.felt');
+    felt?.classList.add('har-valg');
+
+    const navn = felt?.querySelector('.felt__navn');
+    if (navn && !navn.id) navn.id = 'opgavetype-navn';
+
+    const valg = dokument.createElement('div');
+    valg.className = 'valg';
+
+    const knap = dokument.createElement('button');
+    knap.type = 'button';
+    knap.className = 'valg__knap';
+    knap.setAttribute('aria-haspopup', 'listbox');
+    knap.setAttribute('aria-expanded', 'false');
+    if (navn?.id) knap.setAttribute('aria-labelledby', navn.id);
+
+    const tekst = dokument.createElement('span');
+    const pil = dokument.createElement('i');
+    pil.className = 'valg__pil';
+    pil.setAttribute('aria-hidden', 'true');
+    knap.append(tekst, pil);
+
+    const liste = dokument.createElement('div');
+    const listeId = `opgavetype-liste-${Math.random().toString(36).slice(2, 8)}`;
+    liste.id = listeId;
+    liste.className = 'valg__liste';
+    liste.setAttribute('role', 'listbox');
+    liste.setAttribute('aria-labelledby', navn?.id || '');
+    knap.setAttribute('aria-controls', listeId);
+
+    const muligheder = [...select.options].filter(option => option.value !== '');
+    muligheder.forEach(option => {
+      const mulighed = dokument.createElement('button');
+      mulighed.type = 'button';
+      mulighed.className = 'valg__mulighed';
+      mulighed.setAttribute('role', 'option');
+      mulighed.dataset.vaerdi = option.value || option.textContent.trim();
+      mulighed.textContent = option.textContent.trim();
+      liste.append(mulighed);
+    });
+
+    valg.append(knap, liste);
+    select.insertAdjacentElement('afterend', valg);
+
+    const synkroniser = () => {
+      const valgt = select.options[select.selectedIndex];
+      const valgtTekst = valgt?.value ? valgt.textContent.trim() : 'Vælg ydelse';
+      tekst.textContent = valgtTekst;
+      knap.classList.toggle('er-tom', !valgt?.value);
+      liste.querySelectorAll('.valg__mulighed').forEach(mulighed => {
+        mulighed.setAttribute('aria-selected', String(mulighed.dataset.vaerdi === select.value));
+      });
+    };
+
+    const luk = () => {
+      felt?.classList.remove('valg-aaben');
+      knap.setAttribute('aria-expanded', 'false');
+    };
+
+    const aabn = () => {
+      felt?.classList.add('valg-aaben');
+      knap.setAttribute('aria-expanded', 'true');
+      const aktiv = liste.querySelector('[aria-selected="true"]') || liste.querySelector('.valg__mulighed');
+      requestAnimationFrame(() => aktiv?.focus());
+    };
+
+    knap.addEventListener('click', event => {
+      event.preventDefault();
+      knap.getAttribute('aria-expanded') === 'true' ? luk() : aabn();
+    });
+
+    liste.addEventListener('click', event => {
+      const mulighed = event.target.closest('.valg__mulighed');
+      if (!mulighed) return;
+      select.value = mulighed.dataset.vaerdi;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      synkroniser();
+      luk();
+      knap.focus();
+    });
+
+    liste.addEventListener('keydown', event => {
+      const poster = [...liste.querySelectorAll('.valg__mulighed')];
+      const indeks = poster.indexOf(dokument.activeElement);
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        poster[(indeks + 1 + poster.length) % poster.length]?.focus();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        poster[(indeks - 1 + poster.length) % poster.length]?.focus();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        poster[0]?.focus();
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        poster.at(-1)?.focus();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        luk();
+        knap.focus();
+      }
+    });
+
+    select.addEventListener('change', synkroniser);
+    select.addEventListener('focus', () => knap.focus());
+    dokument.addEventListener('pointerdown', event => {
+      if (!valg.contains(event.target)) luk();
+    });
+
+    synkroniser();
+    return { knap, synkroniser, luk };
+  };
+
   const forespurgtYdelse = new URLSearchParams(location.search).get('service');
   if (forespurgtYdelse && ydelsesvalg) {
     const mulighed = [...ydelsesvalg.options].find(option => option.textContent.trim() === forespurgtYdelse.trim());
     if (mulighed) ydelsesvalg.value = mulighed.value || mulighed.textContent;
   }
 
+  const tilpassetValg = opretTilpassetValg(ydelsesvalg);
+
+  const gaTilTilbud = navn => {
+    if (!formular || !ydelsesvalg) return;
+    const mulighed = [...ydelsesvalg.options].find(option => option.textContent.trim() === navn);
+    if (mulighed) {
+      ydelsesvalg.value = mulighed.value || mulighed.textContent;
+      ydelsesvalg.dispatchEvent(new Event('change', { bubbles: true }));
+      tilpassetValg?.synkroniser();
+    }
+    lukDialog();
+    formular.scrollIntoView({ behavior: reduceretBevaegelse ? 'auto' : 'smooth', block: 'center' });
+    setTimeout(() => formular.querySelector('input[name="navn"]')?.focus({ preventScroll: true }), reduceretBevaegelse ? 0 : 550);
+    opdaterByggeviser();
+  };
+
+  dialogTilbud?.addEventListener('click', () => gaTilTilbud(aktivYdelse));
+
   formular?.addEventListener('input', event => {
     event.target.closest('.felt')?.classList.remove('har-fejl');
     if (formularstatus) formularstatus.textContent = '';
     opdaterByggeviser();
   });
-  formular?.addEventListener('change', opdaterByggeviser);
+
+  formular?.addEventListener('change', event => {
+    event.target.closest('.felt')?.classList.remove('har-fejl');
+    if (formularstatus) formularstatus.textContent = '';
+    opdaterByggeviser();
+  });
+
   opdaterByggeviser();
 
   formular?.addEventListener('submit', event => {
@@ -237,8 +393,10 @@
 
     if (ugyldige.length) {
       ugyldige.forEach(felt => felt.closest('.felt')?.classList.add('har-fejl'));
-      if (formularstatus) formularstatus.textContent = 'Udfyld venligst de markerede oplysninger, før e-mailen oprettes.';
-      ugyldige[0].focus();
+      if (formularstatus) formularstatus.textContent = 'Udfyld venligst de markerede oplysninger, før du går videre.';
+      const foerste = ugyldige[0];
+      if (foerste === ydelsesvalg && tilpassetValg) tilpassetValg.knap.focus();
+      else foerste.focus();
       return;
     }
 
@@ -267,7 +425,7 @@
       navn
     ].join('\n');
 
-    if (formularstatus) formularstatus.textContent = 'E-mailen bliver nu gjort klar på din enhed.';
+    if (formularstatus) formularstatus.textContent = 'Din e-mailapp åbnes nu med oplysningerne klar.';
     location.href = `mailto:info@dmemurer.dk?subject=${encodeURIComponent(emne)}&body=${encodeURIComponent(indhold)}`;
   });
 
