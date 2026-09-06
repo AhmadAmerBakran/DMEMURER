@@ -91,6 +91,11 @@
 
   const form = doc.querySelector('[data-contact-form]');
   if (form) {
+    const requestedService = new URLSearchParams(location.search).get('service');
+    if (requestedService && serviceSelect && [...serviceSelect.options].some(option => option.value === requestedService)) {
+      serviceSelect.value = requestedService;
+    }
+
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (!form.reportValidity()) return;
