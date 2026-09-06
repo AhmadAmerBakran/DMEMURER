@@ -1,13 +1,19 @@
-# Service image slots
+# Billeder til ydelser
 
-Add WebP images here at 1800×1200 px (3:2), ideally under 350 KB each:
+Læg billederne til de syv ydelser i denne mappe.
 
-- `service-nybyggeri.webp`
-- `service-fliser-klinker.webp`
-- `service-badevaerelser.webp`
-- `service-facader-fuger.webp`
-- `service-renovering.webp`
-- `service-tilbygning.webp`
-- `service-reparationer.webp`
+Brug præcis disse filnavne:
 
-The homepage automatically replaces its construction-themed placeholders when these files exist.
+```text
+service-nybyggeri.webp
+service-fliser-klinker.webp
+service-badevaerelser.webp
+service-facader-fuger.webp
+service-renovering.webp
+service-tilbygning.webp
+service-reparationer.webp
+```
+
+Anbefalet størrelse er **1800 × 1200 px** i billedforholdet **3:2**.
+
+Se `../../../MEDIA-GUIDE.md` for den samlede vejledning om opløsning, filstørrelse og billedvalg.

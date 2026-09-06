@@ -1,8 +1,14 @@
-# Hero video slot
+# Bannerfilm
 
-Put the final banner files here with these exact names:
+Læg bannerfilmen i denne mappe med disse navne:
 
-- `hero-banner.webm`
-- `hero-banner.mp4`
+```text
+banner-dme.webm
+banner-dme.mp4
+```
 
-Recommended: 1920×1080, 16:9, 8–15 seconds, 24–30 fps, no audio. Then uncomment the two `<source>` tags in the hero video element in `/index.html`.
+Anbefalet opløsning er **1920 × 1080 px** i billedforholdet **16:9**. Filmen bør være **8–15 sekunder**, uden lyd og komprimeret til hurtig indlæsning.
+
+Når filerne er lagt ind, fjernes kommentarerne omkring de to kildehenvisninger i bannerets `<video>`-element i `index.html`.
+
+Se `../../MEDIA-GUIDE.md` for den fulde medievejledning.
